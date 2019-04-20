@@ -1,6 +1,6 @@
 package news_scala
 
-import org.apache.spark
+
 import org.apache.spark.SparkConf
 import org.apache.spark.api.java.JavaSparkContext
 import org.apache.spark.sql._
@@ -13,6 +13,7 @@ object Start {
 
 
     val session = SparkSession.builder.getOrCreate
+
     /*val dataSetNews = session.read.json("data/new1.txt")
     dataSetNews.show()*/
 
