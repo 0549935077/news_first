@@ -1,7 +1,6 @@
 package news_java;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -12,19 +11,25 @@ public class NewsApp {
 
 
     public static void main(String[] args) {
-        SparkConf conf = new SparkConf().setAppName("news_first")
-                .setMaster("local[*]");
+        SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("news_first");
+
+
         JavaSparkContext sc = new JavaSparkContext(conf);
         SQLContext sqlContext = new SQLContext(sc);
 
 
 
-        Dataset<String> dataString1 = sqlContext.read().textFile("data/new1/new1.txt");
+        Dataset<Row> dataString1 = sqlContext.read().json("data/news/*.json");
         dataString1.show();
 
 
     }
 }
 
-
+   /* SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("linked in");
+    JavaSparkContext sc = new JavaSparkContext(conf);
+    SQLContext sqlContext = new SQLContext(sc);
+    Dataset<Row> dataFrame = sqlContext.read().json("data/linkedIn/*.json");
+        dataFrame.show();
+    */
 
