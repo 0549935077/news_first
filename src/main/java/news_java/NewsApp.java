@@ -5,6 +5,8 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.types.DataType;
+import org.apache.spark.sql.types.DataTypes;
 
 import static org.apache.spark.sql.functions.*;
 
@@ -20,8 +22,9 @@ public class NewsApp {
         SparkConf conf = new SparkConf().setMaster("local[*]").setAppName("news_first");
         JavaSparkContext sc = new JavaSparkContext(conf);
         SQLContext sqlContext = new SQLContext(sc);
-
-        Dataset<Row> dataString1 = sqlContext.read().json("data/news/*.json");
+        sqlContext.udf().register(PoliticNew.class.getName(),new PoliticNew(),
+                DataTypes.StringType);
+        Dataset<Row> dataString1 = sqlContext.read().json("data/news/news.json");
         dataString1.show();
         Dataset<Row> dataString2 = dataString1.withColumn(P_WORDS,col(WORDS)
         .multiply(WORDS));
@@ -32,6 +35,5 @@ public class NewsApp {
                 col(WORDS))).show();
     }
 }
-
 
 
