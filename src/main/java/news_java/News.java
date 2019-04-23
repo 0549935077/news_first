@@ -12,8 +12,10 @@ public enum News {
     NO_POLITIC("");
     private final String word;
 
-    public static News getWord(String word){
-        return Arrays.stream(values()).filter(news -> news.getWord().equals(word))
+    public static News getWord(String politic_word){
+    String d = "human rights";
+        return Arrays.stream(values())
+                .filter(news -> news.getWord().equals(d))
                 .findAny().orElse(NO_POLITIC);
     }
 }
